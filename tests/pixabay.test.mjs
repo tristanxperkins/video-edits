@@ -4,7 +4,7 @@ import { mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { loadKey, filterHits, creditsRow } from '../scripts/pixabay.mjs';
+import { loadKey, filterHits, creditsRow, pageSize } from '../scripts/pixabay.mjs';
 
 const hit = (id, w, h, duration) => ({
   id, pageURL: `https://pixabay.com/videos/rings-${id}/`, duration, tags: 'wedding, rings', user: 'someone',
@@ -15,6 +15,15 @@ test('filters by orientation and minimum duration', () => {
   const hits = [hit(1, 1920, 1080, 12), hit(2, 1080, 1920, 8), hit(3, 1080, 1920, 3)];
   assert.deepEqual(filterHits(hits, { orientation: 'vertical', minSecs: 4 }).map(h => h.id), [2]);
   assert.equal(filterHits(hits).length, 3);
+});
+
+test('orientation filters check the full 200-result page unless --per-page is set', () => {
+  assert.equal(pageSize(null, 'vertical'), 200);
+  assert.equal(pageSize(null, 'horizontal'), 200);
+  assert.equal(pageSize(null, null), 20);
+  assert.equal(pageSize('50', 'vertical'), 50);
+  assert.equal(pageSize('999', null), 200);
+  assert.equal(pageSize('1', null), 3);
 });
 
 test('credits row records the Pixabay page URL and escapes pipes', () => {

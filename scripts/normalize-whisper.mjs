@@ -12,6 +12,8 @@
 // - Word times are copied as-is (rounded to the millisecond). Nothing is invented
 //   or shifted. Suspicious words are reported as warnings so the editor checks
 //   them against the audio; --strict turns warnings into a failure.
+// - Brand names in BRAND_SPELLINGS are corrected in the text (e.g. "Wedflex" ->
+//   "WedFlex"); times are never touched. The count is in source.spelling_fixes.
 // - Default output: <whisper-stem>.words.json next to the Whisper JSON.
 
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -22,6 +24,24 @@ import { fileURLToPath } from "node:url";
 
 const LOW_PROBABILITY = 0.4;
 const round = (n) => Math.round(n * 1000) / 1000;
+
+// Brand names Whisper gets wrong, fixed in word and full text (times untouched).
+// Add a row when a new misspelling turns up.
+export const BRAND_SPELLINGS = [
+  [/\bwed[-\s]?flex\b/gi, "WedFlex"],
+];
+
+export function fixSpellings(text) {
+  let fixes = 0;
+  let out = String(text);
+  for (const [pattern, right] of BRAND_SPELLINGS) {
+    out = out.replace(pattern, (m) => {
+      if (m !== right) fixes++;
+      return right;
+    });
+  }
+  return { text: out, fixes };
+}
 
 export function probeDuration(mediaPath) {
   const r = spawnSync(
@@ -46,9 +66,12 @@ export function normalizeWhisper(whisper, audioDurationSecs) {
   }
   const words = [];
   const warnings = [];
+  let spellingFixes = 0;
   for (const w of raw) {
-    const text = String(w.word ?? w.text ?? "").trim();
+    const fixed = fixSpellings(String(w.word ?? w.text ?? "").trim());
+    const text = fixed.text;
     if (!text) continue;
+    spellingFixes += fixed.fixes;
     const start = Number(w.start);
     const end = Number(w.end);
     if (!Number.isFinite(start) || !Number.isFinite(end)) {
@@ -75,11 +98,12 @@ export function normalizeWhisper(whisper, audioDurationSecs) {
         "is --media the same file that was transcribed?",
     );
   }
-  const text = String(whisper.text ?? words.map((w) => w.text).join(" ")).trim();
+  const text = fixSpellings(String(whisper.text ?? words.map((w) => w.text).join(" ")).trim()).text;
   const out = { text, audio_duration_secs: duration, words };
   if (whisper.language) out.language_code = whisper.language;
   out.source = { provider: "openai-whisper" };
-  return { transcript: out, warnings };
+  if (spellingFixes) out.source.spelling_fixes = spellingFixes;
+  return { transcript: out, warnings, spellingFixes };
 }
 
 function main() {

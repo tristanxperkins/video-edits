@@ -30,6 +30,23 @@ test('warns on overlap, zero length and low confidence without changing times', 
   assert.equal(warnings.length, 3);
 });
 
+test('corrects the WedFlex brand spelling in words and text without touching times', () => {
+  const doc = structuredClone(fixture);
+  doc.text = ' Planning a wedding? Try Wedflex or wed-flex, not WedFlex. Start here.';
+  doc.segments[0].words[1] = { word: ' Wedflex,', start: 0.8, end: 1.1, probability: 0.9 };
+  const { transcript, spellingFixes } = normalizeWhisper(doc, 4.0);
+  assert.equal(transcript.words[1].text, 'WedFlex,');
+  assert.equal(transcript.words[1].start, 0.8);
+  assert.equal(transcript.words[1].end, 1.1);
+  assert.equal(transcript.text, 'Planning a wedding? Try WedFlex or WedFlex, not WedFlex. Start here.');
+  assert.equal(spellingFixes, 1);
+  assert.equal(transcript.source.spelling_fixes, 1);
+  // A correctly spelled transcript is left alone and reports nothing.
+  const clean = normalizeWhisper(fixture, 4.0);
+  assert.equal(clean.spellingFixes, 0);
+  assert.equal(clean.transcript.source.spelling_fixes, undefined);
+});
+
 test('rejects transcripts without word timestamps or longer than the media', () => {
   assert.throws(() => normalizeWhisper({ segments: [{ text: 'hi', start: 0, end: 1 }] }, 2), /--word_timestamps True/);
   assert.throws(() => normalizeWhisper(fixture, 2.0), /same file/);

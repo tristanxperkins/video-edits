@@ -34,6 +34,16 @@ node scripts/normalize-whisper.mjs whisper.json --media raw.mp4 --output raw.jso
 ```
 
 - Reuse an existing transcript; pass `--force` only to redo it.
+- Brand spelling: the normalizer corrects "Wedflex", "Wed Flex" and "wed-flex"
+  to **WedFlex** in the words and text without touching times. Add any new
+  misspelling to `BRAND_SPELLINGS` in `scripts/normalize-whisper.mjs`.
+- Do not use `--prompt` (Whisper's initial prompt) by default: on real footage
+  `--prompt "WedFlex"` invented a "WedFlex" in the trailing silence. If you use
+  it, delete any word after the last real speech before cutting.
+- Whisper often starts a word early after a pause, swallowing the silence into it
+  (seen at 0.5-0.9 s on real footage). Never cut at a Whisper word start that
+  follows a pause; find the real onset with
+  `ffmpeg -i <clip> -af silencedetect=noise=-35dB:d=0.25 -f null -`.
 - Whisper word ends are looser than Scribe's. Treat every warning (overlap,
   zero-length, low confidence) as a place to listen before cutting, and confirm
   cut points against the waveform. The normalizer never shifts or invents times.
@@ -52,6 +62,9 @@ Every shot still has to move (playbook rule). Pick the first source that fits:
    node scripts/pixabay.mjs search "bride walking garden" --vertical --min-secs 4
    node scripts/pixabay.mjs download <id> --project <slug> --use "hook: walking down the aisle"
    ```
+   - With `--vertical`/`--horizontal` the script checks 200 results (Pixabay
+     cannot filter orientation, so it is done locally); the summary line says how
+     many it checked.
    - Needs `PIXABAY_API_KEY` in `.env`. If it is missing, stop and ask Tristan to
      add it; never ask for the key in chat.
    - **For ads:** no recognizable faces and no visible brand logos or trademarks

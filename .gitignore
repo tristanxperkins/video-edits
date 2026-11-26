@@ -43,3 +43,6 @@ Thumbs.db
 # Three finished videos explicitly supplied for the public showcase.
 !examples/showcase/curiosity-reel-2.mp4
 !examples/showcase/curiosity-reel-1.mp4
+
+# Local Whisper venv (scripts/transcribe-whisper.mjs)
+.venv-whisper/

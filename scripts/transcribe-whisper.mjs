@@ -3,7 +3,7 @@
 // Free and offline: no API key, nothing is uploaded.
 //
 // Usage:
-//   node scripts/transcribe-whisper.mjs <input> [--model turbo] [--language en]
+//   node scripts/transcribe-whisper.mjs <input> [--model turbo] [--language en] [--prompt "<words>"]
 //        [--output <path>] [--force]
 //
 // Writes:
@@ -28,13 +28,16 @@ const die = (m, c = 1) => { console.error(m); exit(c); };
 
 const args = argv.slice(2);
 if (args.length === 0 || args.includes("--help") || args.includes("-h")) {
-  console.log("Usage: node scripts/transcribe-whisper.mjs <input> [--model turbo] [--language en] [--output path] [--force]");
+  console.log("Usage: node scripts/transcribe-whisper.mjs <input> [--model turbo] [--language en] [--prompt \"<words>\"] [--output path] [--force]");
   exit(args.length === 0 ? 1 : 0);
 }
-const opts = { input: null, model: "turbo", language: "en", output: null, force: false };
+// No default --prompt: on real footage an initial prompt of "WedFlex" leaked into
+// trailing silence as an invented word. The normalizer fixes the brand spelling.
+const opts = { input: null, model: "turbo", language: "en", output: null, force: false, prompt: null };
 for (let i = 0; i < args.length; i++) {
   const a = args[i];
   if (a === "--model") opts.model = args[++i];
+  else if (a === "--prompt") opts.prompt = args[++i];
   else if (a === "--language" || a === "--lang") opts.language = args[++i];
   else if (a === "--output" || a === "-o") opts.output = args[++i];
   else if (a === "--force") opts.force = true;
@@ -79,6 +82,8 @@ const run = spawnSync(
     "--output_format", "json",
     "--output_dir", rawDir,
     "--verbose", "False",
+    // Opt-in vocabulary hint; can invent words in silence, so check the end.
+    ...(opts.prompt ? ["--initial_prompt", opts.prompt] : []),
   ],
   { stdio: "inherit" },
 );
@@ -88,12 +93,13 @@ if (run.status !== 0) die(`Whisper exited with code ${run.status}`, run.status ?
 const rawPath = join(rawDir, `${stem}.json`);
 if (!existsSync(rawPath)) die(`Whisper finished but ${rawPath} is missing`);
 try {
-  const { transcript, warnings } = normalizeWhisper(JSON.parse(readFileSync(rawPath, "utf8")), probeDuration(inputPath));
+  const { transcript, warnings, spellingFixes } = normalizeWhisper(JSON.parse(readFileSync(rawPath, "utf8")), probeDuration(inputPath));
   transcript.source.model = opts.model;
   for (const w of warnings) console.warn(`warning: ${w}`);
   writeFileSync(outputPath, JSON.stringify(transcript, null, 2) + "\n");
   const dt = ((Date.now() - t0) / 1000).toFixed(1);
-  console.log(`ok ${dt}s | ${transcript.words.length} words | ${transcript.audio_duration_secs}s audio | ${warnings.length} warning(s) | ${outputPath}`);
+  const fixes = spellingFixes ? ` | ${spellingFixes} brand spelling fix(es)` : "";
+  console.log(`ok ${dt}s | ${transcript.words.length} words | ${transcript.audio_duration_secs}s audio | ${warnings.length} warning(s)${fixes} | ${outputPath}`);
 } catch (err) {
   die(err.message);
 }

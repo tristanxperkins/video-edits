@@ -3,7 +3,9 @@
 // Use only after footage the user owns (raw-media/broll) has been checked.
 //
 //   node scripts/pixabay.mjs search "<query>" [--vertical|--horizontal] [--min-secs 4]
-//        [--per-page 20] [--type film|animation|all]
+//        [--per-page N] [--type film|animation|all]
+//   (--per-page defaults to 20, or 200 with --vertical/--horizontal: orientation
+//    is filtered locally and most stock video is horizontal)
 //   node scripts/pixabay.mjs download <id> --project <slug> [--size large|medium|small]
 //        [--use "what it illustrates"]
 //
@@ -52,6 +54,14 @@ export function summarizeHit(hit) {
   };
 }
 
+// Pixabay's video API cannot filter by orientation, so the filter runs locally.
+// Most stock video is horizontal: with an orientation filter, check the maximum
+// page (200) unless the user set --per-page.
+export function pageSize(perPageArg, orientation) {
+  const asked = perPageArg ?? (orientation ? 200 : 20);
+  return Math.min(200, Math.max(3, Number(asked) || 20));
+}
+
 export function filterHits(hits, { orientation = null, minSecs = 0 } = {}) {
   return hits
     .map(summarizeHit)
@@ -92,7 +102,9 @@ async function apiGet(params, key) {
 async function main() {
   const [cmd, ...rest] = argv.slice(2);
   if (!cmd || cmd === "--help" || cmd === "-h") {
-    console.log(readFileSync(fileURLToPath(import.meta.url), "utf8").split("\n").slice(1, 15).map((l) => l.replace(/^\/\/ ?/, "")).join("\n"));
+    const lines = readFileSync(fileURLToPath(import.meta.url), "utf8").split(/\r?\n/).slice(1);
+    const header = lines.slice(0, lines.findIndex((l) => !l.startsWith("//")));
+    console.log(header.map((l) => l.replace(/^\/\/ ?/, "")).join("\n"));
     exit(cmd ? 0 : 1);
   }
   const key = loadKey();
@@ -109,16 +121,17 @@ async function main() {
     const valued = new Set(["--min-secs", "--per-page", "--type"]);
     const q = rest.find((a, i) => !a.startsWith("--") && !valued.has(rest[i - 1]));
     if (!q) throw new Error("search needs a query");
+    const orientation = rest.includes("--vertical") ? "vertical" : rest.includes("--horizontal") ? "horizontal" : null;
     const params = {
       q: q.slice(0, 100),
       safesearch: "true",
-      per_page: String(Math.min(200, Math.max(3, Number(opt("--per-page", 20))))),
+      per_page: String(pageSize(opt("--per-page"), orientation)),
       video_type: opt("--type", "film"),
     };
     const json = await apiGet(params, key);
-    const orientation = rest.includes("--vertical") ? "vertical" : rest.includes("--horizontal") ? "horizontal" : null;
+    const checked = json.hits?.length ?? 0;
     const hits = filterHits(json.hits ?? [], { orientation, minSecs: Number(opt("--min-secs", 0)) });
-    console.log(`${hits.length} of ${json.totalHits ?? 0} results for "${q}"${orientation ? ` (${orientation})` : ""}`);
+    console.log(`${hits.length} match (checked ${checked} of ${json.totalHits ?? 0} results) for "${q}"${orientation ? ` (${orientation})` : ""}`);
     for (const h of hits) {
       console.log(`- ${h.id} | ${h.duration}s | ${h.width}x${h.height} | ${h.author} | ${h.tags}\n  ${h.pageURL}\n  thumb: ${h.thumbnail}`);
     }
