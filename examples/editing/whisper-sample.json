@@ -1,0 +1,27 @@
+{
+  "text": " Planning a wedding? Start here.",
+  "segments": [
+    {
+      "id": 0, "seek": 0, "start": 0.24, "end": 1.38,
+      "text": " Planning a wedding?",
+      "tokens": [50365, 31009, 257, 8523, 30],
+      "temperature": 0.0, "avg_logprob": -0.21, "compression_ratio": 0.8, "no_speech_prob": 0.01,
+      "words": [
+        { "word": " Planning", "start": 0.24, "end": 0.72, "probability": 0.9814 },
+        { "word": " a", "start": 0.72, "end": 0.84, "probability": 0.9962 },
+        { "word": " wedding?", "start": 0.84, "end": 1.38, "probability": 0.9907 }
+      ]
+    },
+    {
+      "id": 1, "seek": 0, "start": 2.66, "end": 3.46,
+      "text": " Start here.",
+      "tokens": [50465, 6481, 510, 13],
+      "temperature": 0.0, "avg_logprob": -0.18, "compression_ratio": 0.7, "no_speech_prob": 0.02,
+      "words": [
+        { "word": " Start", "start": 2.66, "end": 2.98, "probability": 0.9871 },
+        { "word": " here.", "start": 2.98, "end": 3.46, "probability": 0.9953 }
+      ]
+    }
+  ],
+  "language": "en"
+}

@@ -19,9 +19,9 @@ it is not a media-free export. New student media and projects are gitignored.
 
 Three additional finished exports were explicitly supplied for public sharing:
 `examples/showcase/ai-edits-everything-reveal.mp4`,
-`ai-edits-everything-raw-vs-edited.mp4`, and `ais-live-ad.mp4`. On 2026-10-14 the
+and `ai-edits-everything-raw-vs-edited.mp4` (the AIS Live ad was later removed
+from this WedFlex copy because AIS brand materials are not licensed for reuse). On 2026-10-14 the
 two "AI edits everything" reels replaced the two curiosity reels at Nate's request;
-they are re-encoded from the 60fps finals for size, and the AIS Live ad is an
-unchanged copy of its export. Preview JPGs were
+they are re-encoded from the 60fps finals for size. Preview JPGs were
 extracted from them. No source projects, private transcripts, or other recordings
 were added with this showcase update. The old README starter image was removed.

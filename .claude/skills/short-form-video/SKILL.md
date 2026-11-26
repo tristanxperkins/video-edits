@@ -129,7 +129,7 @@ One scene = one sub-composition file. Scenes sit on the same `data-track-index` 
 ## Captions (karaoke style)
 
 - Montserrat 900, 46–58px (for 1080 width), 100% white base
-- Active word: scale-1.08 pop + color change to accent (`#37bdf8` for AIS, adapt to brand)
+- Active word: scale-1.08 pop + color change to accent (use the project brand; WedFlex: see DESIGN.wedflex.md caption colors)
 - Stroke via layered `text-shadow`, NEVER `-webkit-text-stroke` (renders inconsistently in Chromium render)
 - Drop the rgba background pill — let the stroke hold readability. Captions should feel like graffiti on the frame, not a subtitle track.
 - For retimes, use a `shift()` function inside `captions.html` to map transcript word timestamps → edited-time. This keeps the transcript JSON untouched and makes retimes mechanical.
@@ -327,4 +327,4 @@ For scenes 3–5 of a 15–20s short (the "middle grind" where attention drops t
 - `feedback_contrast_technique.md` — glow localization + text-shadow halos + brightening dim text
 - `feedback_techy_background_layers.md` — 6-layer control-room background stack
 - `feedback_visual_verification.md` — the verification gate
-- `project_ais_brand_specs.md` — if the short is AIS-branded (hex codes, fonts, logo glow)
+- `DESIGN.wedflex.md` — WedFlex hex codes, fonts, and logo rules

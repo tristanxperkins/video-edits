@@ -90,8 +90,10 @@ out-transform, the value (dark/paper/accent), and the SFX. Before building:
 
 ### 4. Music and the beat grid
 
-Read `docs/TOOLS-AND-API-KEYS.md` first. Music can be the user's own licensed track
-or generated. Generation is a paid call, so confirm before running it:
+Read `docs/TOOLS-AND-API-KEYS.md` first. **WedFlex:** use only a licensed track
+from `raw-media/music/SOURCES.md` (log it in `CREDITS.md`) and skip `kie.mjs`;
+the grid and splice tools below work on any track. Otherwise music can be the
+user's own licensed track or generated. Generation is a paid call, so confirm before running it:
 
 ```sh
 node .agents/skills/motion-showreel/scripts/kie.mjs music --title "Reel" --style "punchy electronic showreel, instrumental, 128 bpm, starts instantly, riser into a big drop" --out video-projects/my-reel/assets/audio
@@ -117,7 +119,8 @@ measured BPM in the HUD (129, not 128). `beatgrid` prints the frame sheet for
 
 ### 5. SFX and the mix
 
-Generate a kit (paid, confirm first) with `scripts/sfx.mjs` (pops, clicks,
+**WedFlex:** use only effects from `raw-media/sfx/SOURCES.md`; do not run
+`sfx.mjs`. Otherwise generate a kit (paid, confirm first) with `scripts/sfx.mjs` (pops, clicks,
 whooshes, glitch, ticks, shimmer, sub boom, final hit, and brand-native sounds), or
 use the user's own library. Place cues on the beat sheet in an `events.json` and
 premix:
@@ -131,7 +134,9 @@ and -1.2 dBTP.
 
 ### 6. Assets
 
-- **Hero lookdev object.** Run `kie.mjs image --ref <logo.png>` (Seedream
+- **Hero lookdev object.** WedFlex: write Artlist prompts for it (house rules
+  section 4) with `assets/brand/wedflex-rings.png` as the reference image, and
+  wait for Tristan's clips. Otherwise run `kie.mjs image --ref <logo.png>` (Seedream
   image-to-image keeps the silhouette), then `kie.mjs video --image <still>` for a
   5s Kling camera move. Both are paid calls. Kling returns 24fps: speed it up and
   re-encode at 60fps all-intra (the command is in the header of `kie.mjs`).

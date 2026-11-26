@@ -11,6 +11,12 @@ brand assets remain unchanged; their inclusion does not grant third-party rights
   The upstream Apache license is included in licenses/HYPERFRAMES-LICENSE.
 - GSAP is installed from npm; its own license applies. See the license files in
   node_modules/gsap and https://gsap.com/community/standard-license/.
+- Fraunces and Montserrat (assets/fonts/) are under the SIL Open Font License 1.1;
+  the license texts are stored next to the font files.
+- WedFlex logos and brand system (assets/brand/, DESIGN.wedflex.md) belong to
+  WedFlex and are not licensed for reuse by others.
+- Pixabay clips used in projects are under the Pixabay Content License; each one
+  is logged with its page URL in that project's CREDITS.md.
 - Some library styles reference Google Fonts. Font licenses remain with their
   publishers. Install and preserve applicable licenses when localizing fonts.
 - Vox, Kallaway, and Infinite are aesthetic reference names. These templates are
@@ -25,6 +31,6 @@ workflow. Third-party notices override these grants for their respective assets.
 Library names, handles, statistics, and source labels inside cards are illustrative
 placeholders. Replace them with your own verified copy before publishing a video.
 
-The three videos in examples/showcase were also explicitly supplied by Nate for
+The videos in examples/showcase were also explicitly supplied by Nate for
 public inclusion as finished-output references. They retain their existing asset
 rights; inclusion does not grant rights to third-party brands or embedded media.

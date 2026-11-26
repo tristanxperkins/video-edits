@@ -18,6 +18,11 @@ mkdirSync(join(dest, 'assets'), { recursive: true });
 mkdirSync(join(dest, 'compositions'), { recursive: true });
 mkdirSync(join(dest, 'renders'), { recursive: true });
 copyFileSync(gsap, join(dest, 'assets/gsap.min.js'));
+// WedFlex brand kit: tokens, local fonts, and logos (see DESIGN.wedflex.md).
+copyFileSync(join(root, 'assets/brand-tokens.css'), join(dest, 'assets/brand-tokens.css'));
+cpSync(join(root, 'assets/fonts'), join(dest, 'assets/fonts'), { recursive: true });
+cpSync(join(root, 'assets/brand'), join(dest, 'assets/brand'), { recursive: true });
+writeFileSync(join(dest, 'CREDITS.md'), '# Credits\n\nEvery third-party asset in this video. Add a row before the asset is used.\n\n| File | Source | URL / ID | Author | License | Used for | Added |\n| --- | --- | --- | --- | --- | --- | --- |\n');
 const meta = JSON.parse(readFileSync(join(dest, 'meta.json'), 'utf8'));
 meta.name = slug;
 writeFileSync(join(dest, 'meta.json'), JSON.stringify(meta, null, 2) + '\n');

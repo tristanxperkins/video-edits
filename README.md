@@ -1,4 +1,10 @@
-# Herk Edit Kit
+# Herk Edit Kit (WedFlex configuration)
+
+> This copy is configured for **WedFlex**. Start with
+> [docs/WEDFLEX-HOUSE-RULES.md](docs/WEDFLEX-HOUSE-RULES.md) and
+> [DESIGN.wedflex.md](DESIGN.wedflex.md). Transcription is local Whisper:
+> `npm run transcribe:whisper -- <video>`.
+
 
 Nate Herk's video-editing kit for **Codex and Claude Code**, built on HyperFrames.
 Formerly the HyperFrames Student Kit.
@@ -7,7 +13,9 @@ motion graphics with HyperFrames and GSAP.
 
 ## Examples
 
-Four finished videos made with this kit.
+Three finished videos made with this kit. (The AI Automation Society ad and
+AIS-branded example projects were removed in this WedFlex copy because the AIS
+brand license does not allow reuse.)
 
 ### YouTube motion showreel
 
@@ -17,7 +25,7 @@ lands as the play button in the logo.
 
 https://github.com/user-attachments/assets/056b46e9-7379-4e71-b825-20fb9f8e9555
 
-The three short-form videos below were recorded by Nate. The first two were
+The two short-form videos below were recorded by Nate. Both were
 edited end to end by an AI agent running the editing skills in this kit, from his
 raw recording: cuts, captions, B-roll, motion graphics, music, and sound effects.
 Press Play on any video to watch it here in the README.
@@ -34,10 +42,6 @@ Opens on the untouched raw recording, then hard-cuts to the finished edit and wa
 
 https://github.com/user-attachments/assets/733bc3f0-432f-41a0-b52d-107cd7f0c806
 
-### AIS Live ad
-
-https://github.com/user-attachments/assets/4ad48761-d14c-407a-9dec-1b76a9afb04a
-
 ## What's included
 
 - **[Editing playbook](docs/EDITING-PLAYBOOK.md):** how Nate's videos get edited with AI, the measured house reel style, the B-roll, caption, and sound rules, and how every note becomes a rule in a skill.
@@ -47,7 +51,7 @@ https://github.com/user-attachments/assets/4ad48761-d14c-407a-9dec-1b76a9afb04a
 - Transcription, silence cutting, mistake detection, reviewed cut rendering,
   transcript retiming, EDL review, beat-sync validation, and preflight tools.
 - **Short-form editing:** reels, YouTube Shorts, hook and payoff planning, precise captions, moving B-roll, and audio review.
-- **12 existing teaching projects** preserved from the original kit.
+- **5 existing teaching projects** preserved from the original kit (AIS-branded ones removed).
 - A synthetic starter composition and editing fixture that need no footage or API key.
 
 ## Tools and optional services
@@ -141,7 +145,7 @@ measure a music take's beat grid, splice it onto the cut grid, and premix sound 
 ## Existing examples and migration
 
 This is the main Herk Edit Kit repository. The newer video-pipeline kit has been
-merged here with both Git histories preserved. The original 12 projects remain
+merged here with both Git histories preserved. The five non-AIS original projects remain
 in `video-projects/`, alongside the original shared brand examples and the
 `make-a-video`, `short-form-video`, and `website-to-hyperframes` skills.
 Use `short-form-edit` for new reels; `short-form-video` documents the older May
@@ -165,7 +169,7 @@ The cards are reusable **draft assets**. Test the cards you choose with your tex
 and footage. Library templates may load GSAP and Google Fonts from their public
 CDNs; localize these dependencies when assembling a final project.
 
-The three showcase videos were explicitly supplied for public sharing. No other
+The showcase videos were explicitly supplied for public sharing. No other
 private recordings, transcripts, credentials, or private workspace settings were
 imported. Previously public examples remain in the repository. New folders
 under `video-projects/` and `raw-media/` are ignored automatically; files already

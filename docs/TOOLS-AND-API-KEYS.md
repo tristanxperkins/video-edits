@@ -4,6 +4,20 @@ Nate uses **ElevenLabs Scribe for transcription** and **Kie.ai for generated vid
 and image assets**. These are his preferred services, not requirements for every
 edit. Bring your own accounts and credits, and configure only what you use.
 
+## WedFlex setup
+
+WedFlex work uses free and owned tools only; see
+[WEDFLEX-HOUSE-RULES.md](WEDFLEX-HOUSE-RULES.md).
+
+| Need | Tool | Setup |
+| --- | --- | --- |
+| Transcription | Local OpenAI Whisper, model `turbo` | Python 3.12, then `py -3.12 -m venv .venv-whisper` and `.venv-whisper\Scripts\pip install -U openai-whisper` (Windows). Run `npm run transcribe:whisper -- <video>`. The model downloads once (~1.5 GB). An NVIDIA GPU makes it much faster. |
+| Stock B-roll | Pixabay video API (free) | Add `PIXABAY_API_KEY=` to `.env` yourself. Use `node scripts/pixabay.mjs`. |
+| AI video | Artlist (Tristan's AI plan) | The agent writes prompts in `ARTLIST-PROMPTS.md`; Tristan generates the clips. |
+| Music and SFX | Licensed Artlist or Pixabay files | Put them in `raw-media/music` and `raw-media/sfx`, with one row per file in each folder's `SOURCES.md`. |
+
+ElevenLabs, Kie.ai, and Suno are not used for WedFlex.
+
 ## What you need
 
 | Tool or service | When you need it | Setup and cost |

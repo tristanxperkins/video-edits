@@ -14,8 +14,11 @@ preserving both published histories and the original repository's stars and URL.
 
 ## What remains
 
-All 12 existing `video-projects/` examples and root `assets/` were retained without
-modification. The original three additional skills remain available. New reels
+The 12 original `video-projects/` examples and root `assets/` were retained in the
+upstream kit. This WedFlex copy removed the seven AIS-branded projects
+(aisoc-app-release, aisoc-hype, aisoc-lesson-5-1, first-agent-promo,
+golden-ratio-demo, hyperframes-sizzle, may-shorts-6) and the AIS root assets,
+which are not licensed for reuse; root `assets/` now holds the WedFlex brand kit. The original three additional skills remain available. New reels
 route to `short-form-edit`; `short-form-video` is the legacy May Shorts reference.
 
 The package retains CommonJS behavior for older `.js` helpers; new tools use

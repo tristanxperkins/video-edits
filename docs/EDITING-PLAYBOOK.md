@@ -1,5 +1,11 @@
 # Editing playbook: how Nate's videos get edited with AI
 
+> **WedFlex configuration:** this playbook is the default. For WedFlex work,
+> [WEDFLEX-HOUSE-RULES.md](WEDFLEX-HOUSE-RULES.md) overrides it on transcription
+> (local Whisper), B-roll sourcing (own footage, then Pixabay), AI video (Artlist
+> prompts), music and SFX (licensed library only), and brand
+> ([DESIGN.wedflex.md](../DESIGN.wedflex.md)). New notes are logged there.
+
 Nate's reels, Shorts, and explainers are now edited by an AI agent (Claude Code or Codex) running skills like the ones in this kit. Nate records himself talking, hands over the file, and the agent cuts it, captions it, finds the B-roll, builds the motion graphics, mixes the music and sound effects, and checks its own work.
 
 This page explains how that works and what we learned building it. The numbers come from studying Nate's own top reels frame by frame and from dozens of edit rounds where he gave notes.
@@ -79,7 +85,7 @@ Measured on Nate's 27 top Instagram Reels (March to September 2026). Use them as
 
 ## B-roll
 
-**Video beats images, every time.** The reel has to hold attention from the first frame to the last, so every shot moves. Preference order:
+**Video beats images, every time.** The reel has to hold attention from the first frame to the last, so every shot moves. Preference order (WedFlex adds Pixabay after your own footage and makes AI video in Artlist from written prompts; see the house rules):
 
 1. Real footage of the thing named: the person's talk, the product's demo, your own long-form video.
 2. A real screen recording of the site or app, zoomed into the part being talked about, with a visible cursor.
@@ -99,8 +105,8 @@ Rules that came from mistakes:
 ## Captions
 
 - 1 to 3 words per chunk, split on phrase boundaries. They hard-swap with no pop animation and appear 2 frames before the first word.
-- Montserrat ExtraBold, all caps, about 62 to 64 px, with a heavy serif accent (Abril Fatface) on 5 to 20% of chunks for soft words. Never two serif chunks in a row.
-- Color on 25 to 45% of chunks, whole chunk only: red for the wrong way or a loss, teal for the concept or keyword, green for the action or payoff.
+- Montserrat ExtraBold, all caps, about 62 to 64 px, with a serif accent on 5 to 20% of chunks for soft words. Never two serif chunks in a row. Nate uses Abril Fatface; **WedFlex uses Fraunces Bold Italic** (tan `#b89c76` or white).
+- Color on 25 to 45% of chunks, whole chunk only: red for the wrong way or a loss, teal for the concept or keyword, green for the action or payoff. **WedFlex:** red `#ff3131`, lavender `#c9b5d5` (replaces teal), green `#4cb051`, all inside the `#2a292a` caption box; see [DESIGN.wedflex.md](../DESIGN.wedflex.md).
 - **One look for the whole reel:** every caption in the same dark box with a thin light edge, so it reads on black, white, and footage alike. Mixing boxed and bare captions looked cheap.
 - **Never white on light.** Measure the pixels behind every caption.
 - Position: on the seam in a split, on the shirt in a punch-in (not the jaw), and in a clear zone when the shot is text to read.

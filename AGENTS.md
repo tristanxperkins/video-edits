@@ -3,6 +3,17 @@
 Turn a talking-head recording into an intentional edit using local HyperFrames
 rendering, transcript-driven cuts, and reusable motion graphics.
 
+## WedFlex configuration (read first)
+
+This kit edits videos for WedFlex, a wedding services marketplace.
+`docs/WEDFLEX-HOUSE-RULES.md` overrides Nate's defaults; `DESIGN.wedflex.md`
+is the brand. In short: local Whisper transcription; B-roll from
+`raw-media/broll` first, then Pixabay (no faces or logos in ads, URL in
+CREDITS.md); write Artlist prompts instead of generating AI video; music and
+SFX only from `raw-media/music` and `raw-media/sfx`; ask before any paid call;
+never post. When Tristan gives a note on a draft, fix the edit AND write the
+note into the relevant skill as a rule in the same turn, then log it.
+
 ## Runtime routing
 
 `AGENTS.md` and `CLAUDE.md` contain the same standing guide. Keep them synchronized.
@@ -52,18 +63,18 @@ See `style-templates/README.md` for whole-scene templates.
 
 Preserve raw files. Use a new output filename for each editing stage. Archive
 obsolete work. Video projects, personal footage, transcripts, credentials, and
-renders are gitignored. The 12 already-published projects are retained as teaching examples; new private
-projects stay ignored. Do not treat existing public examples as permission to add
+renders are gitignored. Five non-AIS published projects are retained as teaching
+examples (AIS-branded ones were removed); new private projects stay ignored. Do not treat existing public examples as permission to add
 new personal footage. Never print secrets or copy private media into library examples.
 
 ## Editing and timing
 
 Before choosing a transcription, asset-generation, or voiceover service, read
 `docs/TOOLS-AND-API-KEYS.md` and check the user's provider choice and local setup.
-ElevenLabs Scribe is Nate's default; honor requests for OpenAI Whisper, local
-Whisper, or another provider. Normalize verified word timestamps for the cutting
-tools. The included transcription script is ElevenLabs-only. Kie.ai is optional
-and needs a configured integration and credits. Reuse existing transcripts and
+WedFlex uses local Whisper (`npm run transcribe:whisper`); ElevenLabs Scribe is
+Nate's default. Normalize verified word timestamps for the cutting tools
+(`scripts/normalize-whisper.mjs`). Kie.ai is not used for WedFlex; write Artlist
+prompts instead. Reuse existing transcripts and
 assets; make any unapproved uploads or paid calls concrete before asking.
 
 Cut silences first; use its edited video AND retimed transcript for cut-mistakes.

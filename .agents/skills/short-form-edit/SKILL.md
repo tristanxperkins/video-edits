@@ -26,10 +26,16 @@ Read `docs/EDITING-PLAYBOOK.md` before planning. It holds Nate's measured reel
 style (pacing, layouts, captions, B-roll order, sound palette), the raw-reel,
 long-to-Short, and narrated-explainer variants, and the lessons that cost time.
 Use it as the default when the user gives no style; the user's brief wins.
+For WedFlex, `docs/WEDFLEX-HOUSE-RULES.md` and `DESIGN.wedflex.md` override the
+playbook: local Whisper; B-roll from `raw-media/broll`, then Pixabay (no
+recognizable faces or logos in ads, page URL in `CREDITS.md`); Artlist prompts
+instead of generated AI video; music and SFX only from the licensed library;
+Fraunces italic serif accent; WedFlex caption colors.
 
-When the user gives a note on a draft, fix the edit, then offer to write the
-note into the relevant skill or reference as a rule, check, or script change, so
-the next edit starts from it. Record the note and the resulting rule together.
+When the user gives a note on a draft, fix the edit, then, in the same turn and
+without asking, write the note into the relevant skill or reference as a rule,
+check, or script change, so the next edit starts from it. Run
+`npm run sync:skills`. Record the note and the resulting rule together.
 
 ## Establish the edit
 
@@ -38,7 +44,8 @@ the next edit starts from it. Record the note and the resulting rule together.
    over aesthetic defaults. Keep all artifacts in `video-projects/<slug>/`.
 2. Probe the supplied source and reference: duration, dimensions, frame rate,
    audio, and existing transcript identity. Preserve originals. Transcribe with
-   the student's chosen provider; ElevenLabs Scribe is Nate's default. Read
+   the student's chosen provider (WedFlex: `npm run transcribe:whisper`);
+   ElevenLabs Scribe is Nate's default. Read
    `docs/TOOLS-AND-API-KEYS.md` for Whisper alternatives, word-timestamp
    normalization, credentials, and service costs. Never substitute an older take.
 3. When a reference is supplied, inspect the entire reel using contact sheets,
@@ -64,7 +71,8 @@ the next edit starts from it. Record the note and the resulting rule together.
 
 User authorization persists. An instruction to make a finished video and iterate
 authorizes ordinary local editing and rendering. An explicit request for Kie
-B-roll authorizes those generations. Resolve review gates through the current
+B-roll authorizes those generations. WedFlex: never generate; write Artlist
+prompts and ask before any paid call. Resolve review gates through the current
 authorization; ask only for missing approval, not again at every draft. Never post
 the reel or contact anyone without explicit authorization.
 
@@ -245,7 +253,11 @@ human reactions where they support the story.
 
 ## Generate and assemble
 
-1. Kie.ai is Nate's optional provider for generated moving inserts and images.
+1. WedFlex: do not generate. Write `ARTLIST-PROMPTS.md` (format in
+   `docs/WEDFLEX-HOUSE-RULES.md` section 4), tell the user, and wait for the
+   clips; then inspect them as below. Search `raw-media/broll` and Pixabay
+   (`scripts/pixabay.mjs`) before proposing AI shots.
+   Kie.ai is Nate's optional provider for generated moving inserts and images.
    Use the student's chosen provider or supplied assets; check its account, credits,
    and integration before generating. See `docs/TOOLS-AND-API-KEYS.md`. Verify the
    current official API schema. Save model, prompt, task ID, selected output,
@@ -266,7 +278,9 @@ human reactions where they support the story.
    use genuine rendered 3D when the metaphor needs it. The framework is a tool,
    not an aesthetic. Preserve editable source.
 4. Source or generate an instrumental bed with clear narration space. Save its
-   provenance. Normalize the voice before mixing; start the bed roughly 14-20 dB
+   provenance. WedFlex: choose only from `raw-media/music/SOURCES.md` by mood and
+   effects only from `raw-media/sfx/SOURCES.md`; never generate or download
+   music or SFX; log each in `CREDITS.md`. Normalize the voice before mixing; start the bed roughly 14-20 dB
    below voice, then adjust to the actual track. Duck under speech, fade cleanly,
    and measure the final mix. Aim around -16 LUFS and <= -1 dBTP, adapting to
    source dynamics rather than crushing them.

@@ -22,6 +22,7 @@ A word-level transcript JSON. Either the ElevenLabs Scribe shape
 
 ```bash
 node scripts/transcribe-elevenlabs.mjs path/to/raw.mp4    # -> path/to/raw.json
+npm run transcribe:whisper -- path/to/raw.mp4             # WedFlex: local Whisper -> path/to/raw.json
 ```
 
 ## Usage

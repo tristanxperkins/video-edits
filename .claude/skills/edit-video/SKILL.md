@@ -6,13 +6,17 @@ description: Edit a raw talking-head video through transcription, silence trimmi
 # Edit a video
 
 Keep each project in `video-projects/<slug>/`, preserving the source recording.
-Read the workspace guide and the project's brief or DESIGN.md. If a direction is
+Read the workspace guide and the project's brief or DESIGN.md. For WedFlex work,
+read `docs/WEDFLEX-HOUSE-RULES.md` and `DESIGN.wedflex.md` first; they override
+the defaults below on transcription, B-roll, AI video, music, SFX, and brand. If a direction is
 missing, propose a style from `style-library/registry.json` based on the footage.
 
 1. Inspect duration, streams, and source resolution with ffprobe. Copy the source
    into the project's assets or reference an explicitly provided local path.
 2. Read `docs/TOOLS-AND-API-KEYS.md` before service setup. Reuse a matching word
-   transcript. Otherwise use the student's chosen provider; Nate defaults to
+   transcript. WedFlex: `npm run transcribe:whisper -- <source>` (local Whisper
+   turbo, normalized by `scripts/normalize-whisper.mjs`). Otherwise use the
+   student's chosen provider; Nate defaults to
    `node scripts/transcribe-elevenlabs.mjs <source>`. OpenAI Whisper and local
    Whisper are supported workflow alternatives after transcript normalization.
    Check available credentials or local dependencies. Explain uploads and costs
@@ -35,6 +39,10 @@ missing, propose a style from `style-library/registry.json` based on the footage
    Resolve failures before the final render. Follow any review approvals already
    provided; do not repeat approval requests for the same authorized action.
 
-Deliver the final MP4 path, edit decisions, retimed transcript, composition,
+When the user gives a note on a draft, fix the edit and, in the same turn, write
+the note into the relevant skill as a rule, check, or script change; run
+`npm run sync:skills` and log it in the house rules' notes log.
+
+Deliver the final MP4 path, `CREDITS.md`, edit decisions, retimed transcript, composition,
 and `VERIFY.md` describing what was checked and any remaining limitations.
 An automated detector proposes edits; editorial judgment remains necessary.

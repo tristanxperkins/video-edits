@@ -11,6 +11,8 @@ video-projects/
 renders/
 **/renders/
 **/assets/
+# The kit's own brand kit (WedFlex logos, tokens, fonts) is tracked.
+!/assets/
 tmp/
 archives/
 *.mp4
@@ -41,4 +43,3 @@ Thumbs.db
 # Three finished videos explicitly supplied for the public showcase.
 !examples/showcase/curiosity-reel-2.mp4
 !examples/showcase/curiosity-reel-1.mp4
-!examples/showcase/ais-live-ad.mp4

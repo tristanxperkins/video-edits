@@ -19,7 +19,9 @@
     "test:media": "node scripts/smoke-media.mjs",
     "validate:short-form": "node .claude/skills/short-form-edit/scripts/validate-plan.mjs",
     "validate:footage": "node .claude/skills/short-form-edit/scripts/validate-footage.mjs",
-    "preflight:all": "node scripts/preflight-all.mjs"
+    "preflight:all": "node scripts/preflight-all.mjs",
+    "transcribe:whisper": "node scripts/transcribe-whisper.mjs",
+    "normalize:whisper": "node scripts/normalize-whisper.mjs"
   },
   "engines": {
     "node": ">=22"
